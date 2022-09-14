@@ -1,39 +1,31 @@
+
 import db
+import mensagens as msg
 
-MENU_INICIAL = 99
+def main():
+    NOVA_VAGA     = 1
+    CONCLUIR_VAGA = 2
+    
+    while True:
+        msg.exibir_cabecalho()
+        msg.exibir_vagas()
+        try:
+            # exibe as opções disponíveis
+            opcao = int(input("O que deseja fazer? 1 = Nova vaga, 2 = Atualizar vaga => "))
 
-def exibir_cabecalho():
-    """ imprimi o cabeçalho no terminal utilizando o tamanho maximo de 60 caracteres """
-    QTD_COLUNAS = 60
-    print ("-" * QTD_COLUNAS)
-    print ("{:^60}".format("VAGAS"))
-    print ("-" * QTD_COLUNAS)
-    print ("{:^60}".format("tecle 99 volta para o menu inicial, [CTRL+C] sai"))
-    print ("-" * QTD_COLUNAS)
+            # verifica qual opção o usuário escolheu
+            if opcao == NOVA_VAGA:
+                msg.mostrar_opcao_nova_vaga()
+            elif opcao == CONCLUIR_VAGA:
+                msg.mostrar_opcao_concluir_vaga()
+            else:
+                print ("Opção não reconhecida, por favor informar um número")    
+        except ValueError as e :
+            print ("Opção não reconhecida, por favor informar um número")
+        except Exception:
+            exit(0)
 
-def exibir_vagas():    
-    """ exibe a lista de tarefas cadastradas, com algumas formatações básicas """
-    for tarefa in db.getvaga():
-        # check = \u2713 é o caracter unicode que representa o concluido
-        check = u'\u2713' if vaga[2] == 1 else ""
-        """
-            os parametros passados para esse format() são o seguinte
-            {:>4}  = 4 posições, alinhado a direita
-            {:<47} = 47 posições, alinhado a esquerda
-            {:^3}  = 3 posições, centralizado
-        """
-        t = "- [{:>4}] {:<47} {:^3}".format(tarefa[0], tarefa[1], check)
-        print (t)
-    print ("-" * 60)
+if __name__ == "__main__":
+    db.criarTabela()
 
-def mostrar_opcao_nova_vaga():
-    texto_nova_vaga = input("Descreva a vaga => ")
-    print ("adicionando tarefa -> " + str(texto_nova_vaga))
-    if texto_nova_vaga != str(MENU_INICIAL):
-        db.adicionarvaga(texto_nova_vaga)    
-
-def mostrar_opcao_concluir_vaga():
-    cd_vaga = int(input("Qual vaga quer concluir? digite o código => "))
-    print ("Concluindo vaga vaga -> " + str(cd_vaga))
-    if cd_vaga != MENU_INICIAL:
-        db.atualizarvaga(cd_vaga)
+    main()
