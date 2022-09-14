@@ -1,3 +1,6 @@
+#Dupla:
+#Denys Leonardo Oliveira de Sales /email: dlos@etepd.com
+#Luana Vitória Ribeiro Bernatrdo /email.: lvrb@etepd.com
 import db
 
 MENU_INICIAL = 99
